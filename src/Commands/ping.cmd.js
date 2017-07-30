@@ -1,13 +1,13 @@
 module.exports = {
 
-    run: function (msg)
+    run: function (msg, bot)
     {
-        msg.reply("Pong!");
+        msg.reply(`The bot's average ping is ${bot.ping}ms`);
     },
 
     help: function (msg)
     {
-        return 'To use ping just type `!ping` !';
+        return 'Used to find the bots ping!';
     }
 
 };

@@ -25,6 +25,21 @@ module.exports = {
                 break;
         };
         return false;
+    },
+
+    // Client = GuildMemeber
+    // Perm = Perm Flag as string | https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-flags
+    userHasPermission: function (client, perm)
+    {
+        return (client.hasPermission(perm) != null) ? client.hasPermission(perm) : false;
+    },
+
+    // Client = Bot member
+    // Guild = Guild
+    // Perm = Perm Flag as string | https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-flags
+    botHasPermission: function (bot, guild, perm)
+    {
+        return this.userHasPermission(guild.member(bot), perm);
     }
 
 };

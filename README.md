@@ -3,10 +3,8 @@
 
 
 # Setup
-- Clone repository
-- Run the install batch file (Located at: 'Batch_Files/install.bat')
-- Enter your credentials in the files under the 'Credentials' folder
-- Modify the Config File for your needs
+- Create a file called 'discord_bot.production.token' in '__Src' for your discord production token
+
 
 # Acknowledgements
 

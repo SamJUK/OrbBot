@@ -1,10 +1,24 @@
+const Auth = require('../Modules/Auth.js');
+
 module.exports = {
 
     /**
      * What is run when someone enters this in chat 
      */
-    run: function (msg)
+    run: function (msg, bot)
     {
+        if (!Auth.userHasPermission(msg.member, "MANAGE_MESSAGES"))
+        {
+            msg.reply("You need the manage messages permission to use this command!");
+            return;
+        };
+
+        if (!Auth.botHasPermission(bot, msg.guild, 'MANAGE_MESSAGES'))
+        {
+            msg.reply("I cannot do this as i dont have the permissions!");
+            return;
+        }
+
         var msgArray = msg.content.split(" ");
 
         // Only 1 parameter declared, so return early

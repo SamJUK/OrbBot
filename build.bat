@@ -15,6 +15,10 @@ REM | Replace Credentials GitIgnore
 del /Q /F "dist\Credentials\.gitignore"
 copy "__Src\.gitignore" "dist\Credentials\.gitignore"
 
+REM | Replace Dev discord token with production
+del /Q /F "dist\Credentials\discord_bot.token"
+copy "__Src\discord_bot.production.token" "dist\Credentials\discord_bot.token"
+
 REM | Push to git repo
 cd dist
 git add -A

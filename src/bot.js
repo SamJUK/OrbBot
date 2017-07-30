@@ -23,9 +23,18 @@ const prefix = Config.prefixes;
 // Console log when we connect
 client.on('ready', () => {
     Log.full('Connection', `Logged in as ${client.user.tag}!`);
+    
+    // Guilds
+    guildsLogFileString = "";
+    client.guilds.forEach(guild => {
+        guildsLogFileString += `Name: ${guild.name}\n\tOwner: ${guild.owner.user.tag}\n`
+    });
+
+    Log.console(`Connected to ${client.guilds.array().length} server/s`,'Servers');
+    Log.file(`\n${guildsLogFileString}`,'Servers');
 });
 
-client.on('message', msg => {
+client.on('message', (msg) => {
     // Check if the message is a command
     if (prefix.indexOf(msg.content[0]) != -1)
     {
@@ -35,7 +44,7 @@ client.on('message', msg => {
         // if command exists
         if (cmdIndex != -1)
         {
-            Cmds.commandsModule[cmdIndex].run(msg);
+            Cmds.commandsModule[cmdIndex].run(msg, client);
         };
     }
 });

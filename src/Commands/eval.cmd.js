@@ -1,3 +1,4 @@
+const Auth = require('../Modules/Auth.js');
 const Config = require('../Modules/Config.js');
 const Utils = require('../Modules/Utils.js');
 const Log = require('../Modules/Logging.js');
@@ -10,6 +11,12 @@ module.exports = {
      */
     run: function (msg)
     {
+        if (!Auth.authorised(msg.author.id, 'Owners'))
+        {
+            msg.reply("You are not authorised to use this command!");
+            return;
+        }
+
         var code = msg.content.split(" ");
         code.splice(0, 1);
 
