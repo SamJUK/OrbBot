@@ -2,7 +2,7 @@ module.exports = {
 
     run: function (msg, bot)
     {
-        msg.reply(`The bot's average ping is ${bot.ping}ms`);
+        msg.reply(`The bot's average ping is ${bot.ping.toFixed(2)}ms`);
     },
 
     help: function (msg)
