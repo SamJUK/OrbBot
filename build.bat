@@ -24,3 +24,6 @@ cd dist
 git add -A
 git commit -m "Pushhhhhh"
 git push heroku master
+
+REM | Wait to be closed
+set /p DUMMY=Hit ENTER to close...

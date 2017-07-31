@@ -39,7 +39,7 @@ module.exports = {
     // Perm = Perm Flag as string | https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-flags
     botHasPermission: function (bot, guild, perm)
     {
-        return this.userHasPermission(guild.member(bot), perm);
+        return this.userHasPermission(guild.member(bot.user), perm);
     }
 
 };
