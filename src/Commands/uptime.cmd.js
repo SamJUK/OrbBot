@@ -13,14 +13,17 @@ module.exports = {
 
         var uptime = `${Math.round(uptimeInSeconds)}s`;
 
-        if (uptimeInSeconds >= 60)
+        if (uptimeInSeconds >= 60 && uptimeInMinutes < 60)
             uptime = `${Math.round(uptimeInMinutes)}m`;
-        else if (uptimeInMinutes >= 60)
+
+        else if (uptimeInMinutes >= 60 && uptimeInHours < 24)
             uptime = `${Math.round(uptimeInHours)}h`;
-        else if (uptimeInHours >= 24)
-            uptime = `${Math.round(uptimeInHours)}days`;
+
+        else if (uptimeInHours >= 24 && uptimeInDays < 7)
+            uptime = `${Math.round(uptimeInDays)}days`;
+
         else if (uptimeInDays >= 7)
-            uptime = `${Math.round(uptimeInHours)}weeks`;
+            uptime = `${Math.round(uptimeInWeeks)}weeks`;
 
 
         msg.reply(`The bot's uptime is ${uptime}`);

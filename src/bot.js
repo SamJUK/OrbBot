@@ -51,3 +51,5 @@ client.on('message', (msg) => {
 
 // Log in
 client.login(Discord_Token);
+
+process.on('unhandledRejection', (err) => console.log('Promise was rejected but there was no error handler: ' + err))
