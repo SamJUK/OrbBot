@@ -10,9 +10,13 @@ const Config = require('./Modules/Config.js');
 const Utils = require('./Modules/Utils.js');
 const Log = require('./Modules/Logging.js');
 const Cmds = require('./Modules/Commands.js');
+const Aliases = require('./Modules/Aliases.js');
 
 // Setup commands
 Cmds.setUp();
+
+// Setup aliases
+Aliases.setUp();
 
 // Set Discord Bot Token
 const Discord_Token = Utils.readFromFile('./Credentials/discord_bot.token')[0];
@@ -27,25 +31,62 @@ client.on('ready', () => {
     // Guilds
     guildsLogFileString = "";
     client.guilds.forEach(guild => {
-        guildsLogFileString += `Name: ${guild.name}\n\tOwner: ${guild.owner.user.tag}\n`
+        guildsLogFileString += `Name: ${guild.name}\n\tOwner: ${guild.owner.user.tag}\n`;
     });
 
     Log.console(`Connected to ${client.guilds.array().length} server/s`,'Servers');
     Log.file(`\n${guildsLogFileString}`,'Servers');
 });
 
-client.on('message', (msg) => {
+client.on('message', msg => {
+
+    // Don't respond to it self.
+    if (msg.author == client.user)
+        return;
+
+    // Chat logging
+    if (Config.chatLogging)
+    {
+        var guild = msg.guild;
+        var guildName = "undefined";
+        if (guild.available)
+            guildName = guild.name;
+
+        Log.file(`#${msg.channel.name} | ${msg.content}`, `../guilds/${guildName}/logs/chat`);
+    }
+
     // Check if the message is a command
     if (prefix.indexOf(msg.content[0]) != -1)
     {
-        Log.full('Commands', `${msg.author.tag} | ${msg.content}`);
+        Log.full(`../guilds/${guildName}/logs/commands`, `@${msg.guild.name} | #${msg.channel.name} | ${msg.author.tag} | ${msg.content}`);
 
+        // If command exists
         var cmdIndex = Cmds.commands.indexOf(msg.content.split(" ")[0].slice(1).toLowerCase());
-        // if command exists
         if (cmdIndex != -1)
         {
             Cmds.commandsModule[cmdIndex].run(msg, client);
+            return;
         };
+
+        // Alias Code
+        // Guild does not have a alias object
+        if (!Aliases.aliases.hasOwnProperty(msg.guild.name.toLowerCase()))
+            return;
+
+        // Does it an alias
+        var cmd = msg.content.split(" ")[0].slice(1).toLowerCase();
+        if (Aliases.aliases[msg.guild.name.toLowerCase()].hasOwnProperty(cmd))
+        {
+            var actualCmd = Aliases.aliases[msg.guild.name.toLowerCase()][cmd];
+            var cmdIndex = Cmds.commands.indexOf(actualCmd);
+            if (cmdIndex != -1)
+            {
+                Cmds.commandsModule[cmdIndex].run(msg, client);
+                return;
+            };
+
+        }
+
     }
 });
 

@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra')
 
 module.exports = {
 
@@ -6,11 +6,16 @@ module.exports = {
      * Log a string to console
      * 
      * @param string Text What to log
+     * @param Filepath | Full pile path e.g /servers/SamJ/Chat
      */
-    console: function (text, logName)
+    console: function (text, logPath)
     {
         var stringPrefix = this.getCurrentTimeStamp() + " | ";
-        console.log(stringPrefix + logName + " | " + text);
+
+        var logPathArray = logPath.split("/");
+        var logType = logPathArray[logPathArray.length-1];
+
+        console.log(stringPrefix + logType + " | " + text);
     },
 
     /**
@@ -30,14 +35,15 @@ module.exports = {
             if (err != null)
             {
                 if (err.code == 'ENOENT') {
-                    fs.writeFileSync(logPath, `File Created: ${this.getCurrentTimeStamp()}\n\n`, 'utf8');
+                    fs.ensureFileSync(logPath);
+                    fs.appendFileSync(logPath, `File Created: ${this.getCurrentTimeStamp()}\r\n\r\n`);
                 } else {
                     this.console(`Some error occured with creating a log file (${logPath}): ${err.code}`);
                 };
             };
 
             // Write our stuff to the file
-            fs.appendFile(logPath, string + '\n', 'utf8', (err) => {
+            fs.appendFile(logPath, string + '\r\n', 'utf8', (err) => {
                 if (err != null)
                     console.log(`An error occured while writing to file (${logPath}): ${err.code}`);
             });
