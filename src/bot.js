@@ -11,12 +11,16 @@ const Utils = require('./Modules/Utils.js');
 const Log = require('./Modules/Logging.js');
 const Cmds = require('./Modules/Commands.js');
 const Aliases = require('./Modules/Aliases.js');
+const Prefixes = require('./Modules/Prefixes.js');
 
 // Setup commands
 Cmds.setUp();
 
 // Setup aliases
 Aliases.setUp();
+
+// Setup Prefixes
+Prefixes.setUp();
 
 // Set Discord Bot Token
 const Discord_Token = Utils.readFromFile('./Credentials/discord_bot.token')[0];
@@ -56,7 +60,7 @@ client.on('message', msg => {
     }
 
     // Check if the message is a command
-    if (prefix.indexOf(msg.content[0]) != -1)
+    if (prefix.indexOf(msg.content[0]) != -1 || Prefixes.prefixes[msg.guild.name.toLowerCase()].indexOf(msg.content[0]) != -1)
     {
         Log.full(`../guilds/${guildName}/logs/commands`, `@${msg.guild.name} | #${msg.channel.name} | ${msg.author.tag} | ${msg.content}`);
 
