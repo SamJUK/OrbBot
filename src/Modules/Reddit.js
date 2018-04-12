@@ -1,5 +1,6 @@
 const request = require('request');
 const Utils = require('./Utils.js');
+const Logging = require('./Logging.js');
 
 module.exports = {
 
@@ -13,6 +14,14 @@ module.exports = {
         request({uri: url, method: 'GET'}, function (error, response, body) {
 
             var jo = JSON.parse(body);
+
+	    // Guard for reddit errors
+	    if ( jo.hasOwnProperty('error') ) 
+	    {
+		msg.reply(`Reddit Error: ${jo.error}`);
+                Logging.full('Reddit', body);
+		return;
+	    };
 
             var posts = jo.data.children;
 
