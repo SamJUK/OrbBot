@@ -4,9 +4,12 @@ module.exports = {
 
     // Logging
     "chatLogging": true,
-    
+
     // PUBG
     "PUBG_API_BASE": "https://pubgtracker.com/api/profile/pc/",
+
+    // Fornite
+    "FORNITE_API_BASE": "https://api.fortnitetracker.com/v1/profile/",
 
     // Authentication Roles
     // Owner [SamJ];
