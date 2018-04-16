@@ -5,7 +5,7 @@ const Utils = require('../Modules/Utils.js');
 const Config = require('../Modules/Config.js');
 
 const FN_API = {
-    "Key" : Utils.readFromFile('./Credentials/fortnite.token')[0],
+    "Key" : process.env.FORTNITE_TOKEN,
     "Base_URL" : Config.FORNITE_API_BASE
 };
 

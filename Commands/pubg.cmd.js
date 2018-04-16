@@ -1,21 +1,21 @@
 const request = require('request');
 const Config = require('../Modules/Config.js');
-const Utils = require('../Modules/Utils.js'); 
+const Utils = require('../Modules/Utils.js');
 
 const PUBG_API = {
-    "Key" : Utils.readFromFile('./Credentials/pubg_api.key')[0],
+    "Key" : process.env.PUBG_TOKEN,
     "Base_URL" : Config.PUBG_API_BASE
 };
 
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
         var msgArray = msg.content.split(" ");
-        
+
         // Missing Parameters
         if (msgArray.length <= 1)
         {
@@ -86,8 +86,8 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {

@@ -3,8 +3,8 @@ const Logging = require('./Logging.js');
 const GoogleImages = require('google-images');
 
 const google = {
-    CSE: Utils.readFromFile('./Credentials/google_CSE.token'),
-    API: Utils.readFromFile('./Credentials/google_API.token')
+    CSE: process.env.GOOGLE_CSE_TOKEN,
+    API: process.env.GOOGLE_API_TOKEN
 };
 
 const googleClient = new GoogleImages(google.CSE, google.API);
