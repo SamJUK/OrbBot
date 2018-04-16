@@ -4,7 +4,7 @@ const Utils = require('./Utils.js');
 
 module.exports = {
 
-    API_KEY: Utils.readFromFile('./Credentials/steam_web_api.key')[0],
+    API_KEY: process.env.STEAM_WEB_TOKEN,
     VANITY: {
         API_BASE: "http://api.steampowered.com/ISteamUser/ResolveVanityURL/v0001/"
     },
@@ -20,7 +20,7 @@ module.exports = {
             // Could not find user
             if (Data.response.success == 42)
                 callback(Data.response.message, passthrough);
-            
+
             if (Data.response.success == 1)
                 callback(Data.response.steamid, passthrough);
         }
