@@ -12,7 +12,7 @@ const googleClient = new GoogleImages(google.CSE, google.API);
 module.exports = {
 
     searchImages: function (phrase, callback, NSFW) {
-        var pg = Math.round(Math.random() * 50) + 1;
+        var pg = Math.round(Math.random() * 5) + 1;
 
         //console.log(`Phrase ${phrase}\nSFW: ${NSFW}`);
 
@@ -23,11 +23,9 @@ module.exports = {
                     .catch(e => {
                         Logging.full('Google', e);
                     });
-
     },
 
     getRandomImage: function (phrase, callback, NSFW) {
-
         var safeSearch = (NSFW == "sfw") ? 'high' : 'off';
         this.searchImages(phrase, callback, safeSearch);
     }

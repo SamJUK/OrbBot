@@ -30,9 +30,21 @@ module.exports = {
                 msg.reply("Please give me a phrase to search");
                 return;
             };
-            phrase = msgArray[2];
+            
+            var phrase = msgArray.slice(2).join(" ");
+            if (phrase == '' || phrase == null || typeof(phrase) == 'undefined')
+            {
+                msg.reply('Please provided a search phrase');
+                return;
+            };
+
         }else{
-            phrase = msgArray[1];
+            var phrase = msgArray.slice(1).join(" ");
+            if (phrase == '' || phrase == null || typeof(phrase) == 'undefined')
+            {
+                msg.reply('Please provided a search phrase');
+                return;
+            };
         };
 
         Google.getRandomImage(phrase, urls => {
