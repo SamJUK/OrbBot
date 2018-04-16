@@ -1,2 +1,0 @@
-cd ../logs/
-del *.log
