@@ -1,9 +1,8 @@
 const Google = require('../Modules/Google.js');
 
 module.exports = {
-
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -16,12 +15,13 @@ module.exports = {
             return;
         }
 
-
         // Defaults
         var safeSearch = "sfw";
         var phrase;
 
         // Check if the 1st parameter is safeSearch settings
+        // @TODO Make order of nsfw/sfw not matter
+        // - Reference fortnite.cmd.js
         if (["nsfw", "sfw", "all"].indexOf(msgArray[1].toLowerCase()) != -1 )
         {
             safeSearch = msgArray[1];
@@ -30,7 +30,7 @@ module.exports = {
                 msg.reply("Please give me a phrase to search");
                 return;
             };
-            
+
             var phrase = msgArray.slice(2).join(" ");
             if (phrase == '' || phrase == null || typeof(phrase) == 'undefined')
             {
@@ -56,12 +56,12 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-
+      return "Get a random image from the first 5 pages of google. \n `!img [nsfw|sfw] [search string]`\n`!img sfw puppies`";
     }
 
 };

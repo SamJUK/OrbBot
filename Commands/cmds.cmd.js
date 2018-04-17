@@ -6,7 +6,7 @@ const prefix = Config.prefixes;
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -19,12 +19,12 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-        msg.reply("`!cmds lists all available commands!`");
+        msg.reply("List of all commands `!cmds`");
     }
 
 };

@@ -1,4 +1,5 @@
 const fs = require("fs-extra");
+const Config = require('../Modules/Config.js');
 
 module.exports = {
   prefixes: {},
@@ -7,9 +8,9 @@ module.exports = {
     {
         // Read all the servers alises and compile into the object
 
-        // Get all GUILDS 
+        // Get all GUILDS
         var guilds = fs.readdirSync('./guilds');
-        
+
         // Check if the item is a directory
         guilds.forEach( guild => {
 
@@ -20,7 +21,7 @@ module.exports = {
             // Check if it does not has a alias file
             if (!fs.existsSync(`./guilds/${guild}/prefixes.json`))
             {
-                this.prefixes[guild] = [];
+                this.prefixes[guild] = Config.prefixes;
                 return;
             };
 
@@ -31,8 +32,11 @@ module.exports = {
             var prefixesObject = JSON.parse(prefixesTEXT);
             // Append it to the alises object
 
-            if (prefixesObject.hasOwnProperty('prefixes'))
+
+            if (prefixesObject.hasOwnProperty('prefixes')){
+                var p = (prefixesObject.prefixes.length > 0) ? prefixesObject.prefixes : Config.prefixes;
                 this.prefixes[guild] = prefixesObject.prefixes;
+            }
         });
     },
 
@@ -66,7 +70,7 @@ module.exports = {
             return;
 
         var index = this.prefixes[guild].indexOf(prefix);
-        
+
         // Prefix is not in array
         if (index == -1)
             return;

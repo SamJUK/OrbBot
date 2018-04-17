@@ -3,13 +3,13 @@ const Ranks = require('../Modules/Ranks.js');
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
         var msgArray = msg.content.split(" ");
         var guildName = msg.guild.name.toLowerCase();
-        
+
         // Missing parameters
         if (msgArray.length <= 1)
         {
@@ -19,7 +19,7 @@ module.exports = {
 
         // Switch on the parameters
         switch (msgArray[1]) {
-            case "rank":
+            case "me":
                     Ranks.rank(msg, guildName, msg.author);
                 break;
             case "promote":
@@ -45,7 +45,7 @@ module.exports = {
                     Ranks.list(msg);
                 break;
             default:
-                msg.reply("wut u on :thinking:");
+                msg.reply("Give me something i know! :thinking:");
                 break;
         }
 
@@ -53,12 +53,21 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-
+      return `Manage Server Ranks \n
+        \`!rank [cmd]\` \n
+        Valid cmds are: \n
+        me \n
+        promote \n
+        demote \n
+        ranks \n
+        set \n
+        list
+      `;
     }
 
 };

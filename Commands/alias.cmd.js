@@ -3,7 +3,7 @@ const Aliases = require('../Modules/Aliases.js');
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -16,59 +16,44 @@ module.exports = {
             return;
         }
 
-        // Add
-        if (msgArray[1].toLowerCase() == "add")
-        {
-            if (msgArray.length <= 3)
-            {
-                msg.reply("I need mooorr!");
+        switch (msgArray[1].toLowerCase()) {
+          case "add":
+            if (msgArray.length <= 3) {
+                msg.reply("Please use the following format\n`!alias add [new command] [command to alias]`\n`!alias add new_ping ping`");
                 return;
             };
             Aliases.add(msg.guild.name, msgArray[2], msgArray[3]);
-            return;
-        }
+          return;
 
-        // Remove
-        if (msgArray[1].toLowerCase() == "remove")
-        {
-            if (msgArray.length <= 2)
-            {
-                msg.reply("I need mooorr!");
+          case "remove":
+            if (msgArray.length <= 2) {
+                msg.reply("Please use the following format\n`!alias remove [alias name]`\n`!alias remove new_ping`");
                 return;
             };
             Aliases.remove(msg.guild.name, msgArray[2]);
-            return;
+          return;
+
+          case "list":
+            var aliases = Aliases.aliases[msg.guild.name.toLowerCase()];
+            var a = '';
+
+            for(var idx in aliases)
+              a += `${idx}: ${aliases[idx]}\n`;
+
+            msg.reply(`Current Aliases are \n\`\`\`${a}\`\`\``);
+          return;
+
         }
-
-        // List
-        if (msgArray[1].toLowerCase() == "list")
-        {
-            console.log(Aliases.aliases);
-
-            /*
-            var aliases = Aliases.aliases[msg.guild.name];
-            var msgS = "";
-
-            for (var key in aliases)
-            {
-                msgS += `${key}: ${aliases.key}\n`;
-            }
-
-            msg.reply(msgS);*/
-
-            return;
-        }
-
     },
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-
+      return "Manage Aliases for commands\n `!alias [cmd] [params]`\n cmds - \n\tadd\n\tremove\n\tlist";
     }
 
 };
