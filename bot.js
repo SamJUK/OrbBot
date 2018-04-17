@@ -18,12 +18,15 @@ const Aliases = require('./Modules/Aliases.js');
 const Prefixes = require('./Modules/Prefixes.js');
 
 // Setup commands
+Log.console("Setting up Commands", "Setup   ");
 Cmds.setUp();
 
 // Setup aliases
+Log.console("Setting up Aliases", "Setup   ");
 Aliases.setUp();
 
 // Setup Prefixes
+Log.console("Setting up Prefixes", "Setup   ");
 Prefixes.setUp();
 
 // Set Discord Bot Token
@@ -81,7 +84,7 @@ client.on('message', msg => {
         if (!Aliases.aliases.hasOwnProperty(msg.guild.name.toLowerCase()))
             return;
 
-        // Does it an alias
+        // Is it an Server alias
         var cmd = msg.content.split(" ")[0].slice(1).toLowerCase();
         if (Aliases.aliases[msg.guild.name.toLowerCase()].hasOwnProperty(cmd))
         {
@@ -92,7 +95,17 @@ client.on('message', msg => {
                 Cmds.commandsModule[cmdIndex].run(msg, client);
                 return;
             };
+        }
 
+        // Is it a bot alises
+        if(Config.aliases.hasOwnProperty(cmd)){
+          var actualCmd = Config.aliases[cmd];
+          var cmdIndex = Cmds.commands.indexOf(actualCmd);
+          if (cmdIndex != -1)
+          {
+              Cmds.commandsModule[cmdIndex].run(msg, client);
+              return;
+          };
         }
 
     }

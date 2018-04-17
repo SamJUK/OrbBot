@@ -1,17 +1,17 @@
 /**
  * Roll a dice command
  * !rtd [Parameter1] [Parameter2]
- * 
+ *
  * @param Parameter1 | Int | How many dice to roll [Optional] (Defaults to 1)
- * @param Parameter2 | Int | How many sides each dice has [Optional] (Defaults to 6)   
- * 
+ * @param Parameter2 | Int | How many sides each dice has [Optional] (Defaults to 6)
+ *
  * @example !rtd | !rtd 2 | !rtd 2 8
  */
 
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -48,12 +48,12 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-
+      return "Roll a dice `!rtd [dice count] [dice sides]` \n `!rtd 2 6`";
     }
 
 };

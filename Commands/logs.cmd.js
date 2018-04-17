@@ -1,11 +1,11 @@
-const fs = require('fs-extra');
+  const fs = require('fs-extra');
 
 module.exports = {
 
     logTypes: ["all", "commands", "chat"],
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -13,37 +13,34 @@ module.exports = {
 
         if (msgArray.length <= 1)
         {
-            msg.reply("Missing Parameters");
+            msg.reply("Missing Parameters, e.g `!logs "+this.logTypes.join("|")+"`");
             return;
         };
 
         // Is vaild log type
         if (this.logTypes.indexOf(msgArray[1].toLowerCase()) == -1)
         {
-            msg.reply("I do not have those logs!");
+            msg.reply("I do not have those types of logs!");
             return;
         };
 
         if (msgArray[1].toLowerCase() == "all")
         {
             this.logTypes.forEach( file => {
-                if (file == "all")
-                    return;
+                if (file == "all") return;
                 this.sendLog(msg, file);
             });
             return;
         };
 
         this.sendLog(msg, msgArray[1].toLowerCase());
-
-
     },
 
     sendLog: function (msg, log)
     {
         if (!fs.existsSync(`./guilds/${msg.guild.name}/logs/${log}.log`))
         {
-            msg.reply("Does not exist!");
+            msg.reply("Log does not exist!");
             return;
         };
 
@@ -53,12 +50,12 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-        return "You can request the following logs:\n`all` - This is all the logs\n`commands` - All command logs\n `chat` - All chat logs"
+        return "You can request the following logs:\n`all` - This is all the logs\n`commands` - All command logs\n `chat` - All chat logs\n\n`!logs chat`"
     }
 
 };

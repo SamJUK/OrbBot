@@ -3,7 +3,7 @@ const Auth = require('../Modules/Auth.js');
 module.exports = {
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg, bot)
     {
@@ -31,7 +31,7 @@ module.exports = {
         var messageCount = parseInt(msgArray[1]);
 
         // Is not a number or not within clamp range so exit early.
-        if (isNaN(messageCount) || messageCount <= 1 || messageCount > 100)
+        if (isNaN(messageCount) || messageCount < 1 || messageCount > 100)
         {
             msg.reply("The second parameter must be a number between 1 and 99!");
             return;
@@ -52,8 +52,8 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {

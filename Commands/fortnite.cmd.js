@@ -29,10 +29,34 @@ module.exports = {
           return;
         }
 
+
+        var platform = 'pc'; // Default
+        var username = msgArray[1]; // Default
+
+        // If we have more than 1 argument
+        // Detect what platform we are using
+        // And Username
+        if(msgArray.length >= 3){
+          // Platform
+          var platforms = ['xbl', 'psn', 'pc'];
+          for(var i in platforms){
+            if(msg.content.includes(platforms[i])){
+              platform = platforms[i];
+            }
+          };
+
+          // Username
+          var tmp = msgArray;
+          tmp.splice(0, 1);
+          tmp.splice(tmp.indexOf(platform),1);
+          username = tmp[0];
+        }
+
+
         // Parse
         var data = {
-          username: msgArray[1],
-          platform: (msgArray.length >= 3) ? msgArray[2] : 'pc'
+          username: username,
+          platform: platform
         };
 
         var passthrough = {
@@ -44,7 +68,8 @@ module.exports = {
           var json = JSON.parse(data);
 
           if(json.hasOwnProperty('error')){
-            msg.reply('Whoops! An error occurred 🤷');
+            var _suffix = (['Player Not Found'].indexOf(json.error) !== -1) ? json.error : '';
+            msg.reply('Whoops! An error occurred 🤷 ' + _suffix);
             console.log(json);
             return;
           }
@@ -64,9 +89,11 @@ module.exports = {
 
           var stats = '';
           for(var stat in json.lifeTimeStats)
-            stats += `**${json.lifeTimeStats[stat]["key"]}:** ${json.lifeTimeStats[stat]["value"]}\n`;
+            stats += `+ ${json.lifeTimeStats[stat]["key"]}: ${json.lifeTimeStats[stat]["value"]}\n`;
 
-            msg.reply(`\n**${json.epicUserHandle}**'s Life time **${json.platformNameLong}**'s Stats Are\n${stats}`);
+
+          var time = passthrough.mtime.toUTCString();
+          msg.reply(`\n\`\`\`diff\n- ${json.epicUserHandle}'s Life time ${json.platformNameLong}'s Stats Are: \n\n${stats}\nLast updated: ${time}\`\`\``);
         });
 
     },
@@ -86,6 +113,7 @@ module.exports = {
 
       if(this.isCached(data)){
         Log.full('fortnite', `Using cached data for: ${data.platform} - ${data.username}`)
+        passthrough.mtime = new Date(this.getmTime(data));
         callback(
           this.getCached(data),
           passthrough
@@ -97,8 +125,10 @@ module.exports = {
       Log.full('fortnite', 'Fetching Fortnite Stats: ' + url);
       request({uri: url, headers: { 'TRN-Api-Key': FN_API.Key.trim() }, method: 'GET'}, function (error, response, body) {
         if(error != null)
-          Log.full('fortnite', 'error:', error); // Print the error if one occurred
-          Log.full('fortnite', console.log('statusCode:', response && response.statusCode)); // Print the response status code if a response was received
+          Log.full('fortnite', 'error: ' + error); // Print the error if one occurred
+          Log.full('fortnite', console.log('statusCode: ' + response.statusCode)); // Print the response status code if a response was received
+
+        passthrough.mtime = new Date()
         callback(body, passthrough);
       });
     },
@@ -120,6 +150,12 @@ module.exports = {
       var path = `cache/${data.platform}/${data.username}.cache`;
       var res = fs.readFileSync(path, 'utf-8');
       return res;
+    },
+
+    getmTime: function (data)
+    {
+      var path = `cache/${data.platform}/${data.username}.cache`;
+      return fs.statSync(path).mtime;
     }
 
 };

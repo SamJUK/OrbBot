@@ -23,7 +23,7 @@ module.exports = {
     ],
 
     /**
-     * What is run when someone enters this in chat 
+     * What is run when someone enters this in chat
      */
     run: function (msg)
     {
@@ -35,7 +35,7 @@ module.exports = {
             return;
         }
 
-        msgArray.slice(0, -1);
+        msgArray.slice(0, 1);
 
         var question = msgArray.join(" ");
 
@@ -47,12 +47,12 @@ module.exports = {
 
     /**
      * What is display when a user enters !help (this command) in chat
-     * 
-     * MUST RETURN A STRING 
+     *
+     * MUST RETURN A STRING
      */
     help: function (msg)
     {
-
+      return "`!8ball Is 15 wrong?`";
     }
 
 };
