@@ -67,9 +67,10 @@ client.on('message', msg => {
     }
 
     // Check if the message is a command
-    if (prefix.indexOf(msg.content[0]) != -1 || Prefixes.prefixes[msg.guild.name.toLowerCase()].indexOf(msg.content[0]) != -1)
+    const guildname = msg.guild.name.toLowerCase();
+    if (prefix.indexOf(msg.content[0]) != -1 || (typeof Prefixes.prefixes[guildname] !== 'undefined' && Prefixes.prefixes[guildname].indexOf(msg.content[0]) != -1))
     {
-        Log.full(`../guilds/${guildName}/logs/commands`, `@${msg.guild.name} | #${msg.channel.name} | ${msg.author.tag} | ${msg.content}`);
+        Log.full(`../guilds/${guildname}/logs/commands`, `@${guildname} | #${msg.channel.name} | ${msg.author.tag} | ${msg.content}`);
 
         // If command exists
         var cmdIndex = Cmds.commands.indexOf(msg.content.split(" ")[0].slice(1).toLowerCase());
@@ -77,7 +78,7 @@ client.on('message', msg => {
         {
             Cmds.commandsModule[cmdIndex].run(msg, client);
             return;
-        };
+        }
 
         // Alias Code
         // Guild does not have a alias object
@@ -89,23 +90,23 @@ client.on('message', msg => {
         if (Aliases.aliases[msg.guild.name.toLowerCase()].hasOwnProperty(cmd))
         {
             var actualCmd = Aliases.aliases[msg.guild.name.toLowerCase()][cmd];
-            var cmdIndex = Cmds.commands.indexOf(actualCmd);
+            cmdIndex = Cmds.commands.indexOf(actualCmd);
             if (cmdIndex != -1)
             {
                 Cmds.commandsModule[cmdIndex].run(msg, client);
                 return;
-            };
+            }
         }
 
         // Is it a bot alises
         if(Config.aliases.hasOwnProperty(cmd)){
-          var actualCmd = Config.aliases[cmd];
-          var cmdIndex = Cmds.commands.indexOf(actualCmd);
+          var actualCmdd = Config.aliases[cmd];
+          cmdIndex = Cmds.commands.indexOf(actualCmdd);
           if (cmdIndex != -1)
           {
               Cmds.commandsModule[cmdIndex].run(msg, client);
               return;
-          };
+          }
         }
 
     }
@@ -114,4 +115,4 @@ client.on('message', msg => {
 // Log in
 client.login(Discord_Token);
 
-process.on('unhandledRejection', (err) => console.log('Promise was rejected but there was no error handler: ' + err))
+process.on('unhandledRejection', (err) => console.log('Promise was rejected but there was no error handler: ' + err));
