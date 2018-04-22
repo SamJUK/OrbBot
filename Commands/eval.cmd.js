@@ -3,6 +3,7 @@ const Config = require('../Modules/Config.js');
 const Utils = require('../Modules/Utils.js');
 const Log = require('../Modules/Logging.js');
 const Cmds = require('../Modules/Commands.js');
+const Prefixes = require('../Modules/Prefixes.js');
 
 module.exports = {
 
