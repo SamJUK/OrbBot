@@ -1,4 +1,5 @@
 const Google = require('../Modules/Google.js');
+const Config = require('../Modules/Config.js');
 
 module.exports = {
     /**
@@ -6,7 +7,18 @@ module.exports = {
      */
     run: function (msg)
     {
+
         var msgArray = msg.content.split(" ");
+
+        // if (msg.author.id === '111106705319841792' && msgArray[1].toLowerCase() === 'kev'){
+        //   Config.kevImage = msgArray[2];
+        //   return;
+        // }
+
+        // if ( msg.author.id === '132279167998885888' ) {
+        //   msg.reply(Config.kevImage)
+        //   return;
+        // }
 
         // Missing parameters
         if (msgArray.length <= 1)
@@ -24,6 +36,7 @@ module.exports = {
         // - Reference fortnite.cmd.js
         if (["nsfw", "sfw", "all"].indexOf(msgArray[1].toLowerCase()) != -1 )
         {
+            // safeSearch = msg.author.id === '132279167998885888' ? 'sfw' : msgArray[1];
             safeSearch = msgArray[1];
             if (msgArray.length <= 2)
             {
