@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^11.3.2",
+    "discord.js": "^11.4.2",
     "dotenv": "^5.0.1",
     "fs-extra": "^4.0.3",
     "google-images": "^2.1.0",
-    "hoek": "^5.0.3",
-    "request": "^2.85.0"
+    "hoek": "^5.0.4",
+    "request": "^2.88.0"
   }
 }
