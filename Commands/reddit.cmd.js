@@ -1,6 +1,8 @@
 const Reddit = require('../Modules/Reddit.js');
 
 module.exports = {
+    rateLimit: 5000,
+
     subs : ["foodporn", "Cinemagraphs", "AbandonedPorn", "EarthPorn", "itookapicture"],
 
     /**

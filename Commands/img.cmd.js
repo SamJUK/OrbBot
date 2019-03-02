@@ -2,6 +2,9 @@ const Google = require('../Modules/Google.js');
 const Config = require('../Modules/Config.js');
 
 module.exports = {
+
+    rateLimit: 5000,
+
     /**
      * What is run when someone enters this in chat
      */

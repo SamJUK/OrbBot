@@ -2,6 +2,8 @@
 
 module.exports = {
 
+    rateLimit: 2500,
+
     logTypes: ["all", "commands", "chat"],
 
     /**
