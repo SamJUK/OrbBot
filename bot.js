@@ -55,6 +55,11 @@ client.on('message', msg => {
     if (msg.author == client.user)
         return;
 
+    if(msg.author.id === '132279167998885888') {
+        msg.reply('<@132279167998885888> https://i.redd.it/1x5sls95ds321.jpg');
+        return false;
+    }
+
     // Chat logging
     if (Config.chatLogging)
     {
