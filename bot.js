@@ -76,6 +76,12 @@ client.on('message', msg => {
         var cmdIndex = Cmds.commands.indexOf(msg.content.split(" ")[0].slice(1).toLowerCase());
         if (cmdIndex != -1)
         {
+            if((rate = Cmds.isRateLimited(cmdIndex, msg.author)) !== false) {
+                msg.reply(Cmds.getRateLimitResponse(rate));
+                return;
+            }
+
+            Cmds.addRateLimit(cmdIndex, msg.author);
             Cmds.commandsModule[cmdIndex].run(msg, client);
             return;
         }
@@ -93,6 +99,12 @@ client.on('message', msg => {
             cmdIndex = Cmds.commands.indexOf(actualCmd);
             if (cmdIndex != -1)
             {
+                if((rate = Cmds.isRateLimited(cmdIndex, msg.author)) !== false) {
+                    msg.reply(Cmds.getRateLimitResponse(rate));
+                    return;
+                }
+
+                Cmds.addRateLimit(cmdIndex, msg.author);
                 Cmds.commandsModule[cmdIndex].run(msg, client);
                 return;
             }
@@ -104,6 +116,12 @@ client.on('message', msg => {
           cmdIndex = Cmds.commands.indexOf(actualCmdd);
           if (cmdIndex != -1)
           {
+              if((rate = Cmds.isRateLimited(cmdIndex, msg.author)) !== false) {
+                  msg.reply(Cmds.getRateLimitResponse(rate));
+                  return;
+              }
+
+              Cmds.addRateLimit(cmdIndex, msg.author);
               Cmds.commandsModule[cmdIndex].run(msg, client);
               return;
           }
