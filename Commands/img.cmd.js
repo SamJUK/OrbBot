@@ -64,6 +64,10 @@ module.exports = {
         };
 
         Google.getRandomImage(phrase, urls => {
+            if(typeof urls === 'object' && urls.hasOwnProperty('error')) {
+                msg.reply('Its fucking broken pal: '+urls.error);
+                return false;
+            }
             var count = urls.length-1;
             var url = urls[Math.round(Math.random()*count)].url;
             msg.reply(url);
