@@ -22,6 +22,7 @@ module.exports = {
                     })
                     .catch(e => {
                         Logging.full('Google', e);
+                        callback({'error':e});
                     });
     },
 

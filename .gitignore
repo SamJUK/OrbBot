@@ -1,2 +1,12 @@
+.idea/
+.vscode/
+
 node_modules/
+
+.floo
+.flooignore
+
 .env
+Logs/
+guilds/
+cache/

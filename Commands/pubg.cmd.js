@@ -14,6 +14,8 @@ const seasons = ["2017-pre1", "2017-pre2", "2017-pre3", "2017-pre4", "2017-pre5"
 
 module.exports = {
 
+    rateLimit: 5000,
+
     /**
      * What is run when someone enters this in chat
      *

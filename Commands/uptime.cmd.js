@@ -5,28 +5,58 @@ module.exports = {
      */
     run: function (msg, bot)
     {
+        var minute = 60, hour = 3600, day = 86400, week = 604800, month = 2419200, year = 29030400;
+
         var uptimeInSeconds = bot.uptime / 1000;
-        var uptimeInMinutes = uptimeInSeconds / 60;
-        var uptimeInHours = uptimeInMinutes / 60;
-        var uptimeInDays = uptimeInHours / 24;
-        var uptimeInWeeks = uptimeInWeeks / 7;
+        var uptimeSegments = {};
 
-        var uptime = `${Math.round(uptimeInSeconds)}s`;
+        if(uptimeInSeconds > year) {
+            var years = Math.floor(uptimeInSeconds/year);
+            uptimeInSeconds -= (year*years);
+            uptimeSegments['years'] = years;
+        }
 
-        if (uptimeInSeconds >= 60 && uptimeInMinutes < 60)
-            uptime = `${Math.round(uptimeInMinutes)}m`;
+        if(uptimeInSeconds > month) {
+            var months = Math.floor(uptimeInSeconds/month);
+            uptimeInSeconds -= (month*months);
+            uptimeSegments['months'] = months;
+        }
 
-        else if (uptimeInMinutes >= 60 && uptimeInHours < 24)
-            uptime = `${Math.round(uptimeInHours)}h`;
+        if(uptimeInSeconds > week) {
+            var weeks = Math.floor(uptimeInSeconds/week);
+            uptimeInSeconds -= (week*weeks);
+            uptimeSegments['weeks'] = weeks;
+        }
 
-        else if (uptimeInHours >= 24 && uptimeInDays < 7)
-            uptime = `${Math.round(uptimeInDays)}days`;
+        if(uptimeInSeconds > day) {
+            var days = Math.floor(uptimeInSeconds/day);
+            uptimeInSeconds -= (day*days);
+            uptimeSegments['days'] = days;
+        }
 
-        else if (uptimeInDays >= 7)
-            uptime = `${Math.round(uptimeInWeeks)}weeks`;
+        if(uptimeInSeconds > hour) {
+            var hours = Math.floor(uptimeInSeconds/hour);
+            uptimeInSeconds -= (hour*hours);
+            uptimeSegments['hours'] = hours;
+        }
+
+        if(uptimeInSeconds > minute) {
+            var minutes = Math.floor(uptimeInSeconds/minute);
+            uptimeInSeconds -= (minute*minutes);
+            uptimeSegments['minutes'] = minutes;
+        }
+
+        uptimeSegments['seconds'] = Math.round(uptimeInSeconds);
+
+        var uptime_str = '';
+        for(var prop in uptimeSegments) {
+            var time = uptimeSegments[prop];
+            uptime_str += `, ${time} ${prop}`;
+        }
 
 
-        msg.reply(`The bot's uptime is ${uptime}`);
+        uptime_str = uptime_str.substr(2, uptime_str.length-2);
+        msg.reply(`The bot's uptime is ${uptime_str}`);
     },
 
     /**

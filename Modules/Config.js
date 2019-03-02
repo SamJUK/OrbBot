@@ -1,4 +1,7 @@
 module.exports = {
+
+    "kevImage": 'https://scontent-lht6-1.xx.fbcdn.net/v/t1.0-9/12805742_1254565147891704_6856559204989468041_n.jpg?_nc_cat=0&oh=4fbc837801fd3a4c4b27cfdaf326e94c&oe=5BE3F8F5',
+
     // Array of valid prefixes to use with the bot
     "prefixes": ["!"],
 

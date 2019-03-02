@@ -11,6 +11,8 @@ const FN_API = {
 
 module.exports = {
 
+    rateLimit: 5000,
+
     /**
      * What is run when someone enters this in chat
      *

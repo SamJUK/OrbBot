@@ -31,7 +31,7 @@ module.exports = {
                 return;
             }
 
-            var rndNum = Math.round(Math.random()*posts.length);
+            var rndNum = Math.ceil(Math.random()*posts.length)-1;
             var post = posts[rndNum];
             callback(post);
         });
@@ -39,6 +39,7 @@ module.exports = {
 
     getRandomImage: function (sub, callback, msg) {
         this.getRandomPost(sub, post => {
+            if(typeof post === 'undefined') return false;
             callback(post.data.url);
         }, msg);
     }

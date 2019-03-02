@@ -1,12 +1,27 @@
 const Google = require('../Modules/Google.js');
+const Config = require('../Modules/Config.js');
 
 module.exports = {
+
+    rateLimit: 5000,
+
     /**
      * What is run when someone enters this in chat
      */
     run: function (msg)
     {
+
         var msgArray = msg.content.split(" ");
+
+        // if (msg.author.id === '111106705319841792' && msgArray[1].toLowerCase() === 'kev'){
+        //   Config.kevImage = msgArray[2];
+        //   return;
+        // }
+
+        // if ( msg.author.id === '132279167998885888' ) {
+        //   msg.reply(Config.kevImage)
+        //   return;
+        // }
 
         // Missing parameters
         if (msgArray.length <= 1)
@@ -24,6 +39,7 @@ module.exports = {
         // - Reference fortnite.cmd.js
         if (["nsfw", "sfw", "all"].indexOf(msgArray[1].toLowerCase()) != -1 )
         {
+            // safeSearch = msg.author.id === '132279167998885888' ? 'sfw' : msgArray[1];
             safeSearch = msgArray[1];
             if (msgArray.length <= 2)
             {
@@ -48,6 +64,10 @@ module.exports = {
         };
 
         Google.getRandomImage(phrase, urls => {
+            if(typeof urls === 'object' && urls.hasOwnProperty('error')) {
+                msg.reply('Its fucking broken pal: '+urls.error);
+                return false;
+            }
             var count = urls.length-1;
             var url = urls[Math.round(Math.random()*count)].url;
             msg.reply(url);
