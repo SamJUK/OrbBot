@@ -72,6 +72,12 @@ client.on('message', msg => {
         Log.file(`#${msg.channel.name} | ${msg.content}`, `../guilds/${guildName}/logs/chat`);
     }
 
+    // Are we ignoring this channel
+    if(Config.ignoredchannels.includes(msg.channel.id) && msg.content.split(' ')[0] !== '!ignorechannel') {
+        Log.console(`Ignore command "${msg.content}" due to ignore channel ${msg.channel.id}`, 'Commands');
+        return false;
+    }
+
     // Check if the message is a command
     const guildname = msg.guild.name.toLowerCase();
     if (prefix.indexOf(msg.content[0]) != -1 || (typeof Prefixes.prefixes[guildname] !== 'undefined' && Prefixes.prefixes[guildname].indexOf(msg.content[0]) != -1))

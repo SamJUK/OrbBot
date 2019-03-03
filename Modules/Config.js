@@ -24,6 +24,8 @@ module.exports = {
     // Owner [SamJ];
     "Owners": ["111106705319841792"],
     "Admins": [],
-    "Moderators" : []
+    "Moderators" : [],
+
+    "ignoredchannels": []
 
 };
