@@ -14,7 +14,7 @@ module.exports = {
 
         // Get sub name
         var sub = (msgArray.length <= 1)
-          ? subs[Math.floor(Math.random()*subs.length)]
+          ? this.subs[Math.floor(Math.random()*this.subs.length)]
           : msgArray[1];
 
         // Get random image
