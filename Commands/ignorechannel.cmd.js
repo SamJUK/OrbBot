@@ -35,7 +35,7 @@ module.exports = {
             }
 
             Config.ignoredchannels.push(channelid);
-            msg.reply(`Added channel ${channelid} from ignore list`);
+            msg.reply(`Added channel ${channelid} to ignore list`);
             return false;
         }
 
