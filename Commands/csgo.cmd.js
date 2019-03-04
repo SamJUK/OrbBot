@@ -61,20 +61,20 @@ module.exports = {
         var url = `${CSGO_API.API_BASE}&key=${Steam.API_KEY}&steamid=${steam64}`;
 
         request({uri: url, method: 'GET'}, function (error, response, body) {
-          Log.full('csgo', `Fetching CSGO Stats: ${url}`);
+            Log.full('csgo', `Fetching CSGO Stats: ${url}`);
             if(error != null)
-              Log.full('csgo', `error: ${error}`);
+                Log.full('csgo', `error: ${error}`);
+            
             Log.full('csgo', `HTTP Status: ${response.statusCode}`);
 
             // Bad Response
             if(Number(response.statusCode) !== 200) {
-              passthrough.msg.reply(`I'm scared 😱 Server responded with ${response.statusCode}`);
-              return;
+                passthrough.msg.reply(`I'm scared 😱 Server responded with ${response.statusCode}`);
+                return;
             }
 
             passthrough.csgo.parseData(body, passthrough); // Return what we receive
         });
-
     },
 
     parseData: function (json, passthrough)

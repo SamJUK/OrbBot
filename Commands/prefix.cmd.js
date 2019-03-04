@@ -7,6 +7,9 @@ module.exports = {
      */
     run: function (msg)
     {
+        msg.reply('Nah G, this probs aint stable ya get me?');
+        return;
+
         var msgArray = msg.content.split(" ");
 
         // Missing Parameter
