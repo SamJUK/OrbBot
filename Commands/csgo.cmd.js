@@ -67,7 +67,7 @@ module.exports = {
             Log.full('csgo', `HTTP Status: ${response.statusCode}`);
 
             // Bad Response
-            if(response.statusCode){
+            if(Number(response.statusCode) !== 200) {
               passthrough.msg.reply(`I'm scared 😱 Server responded with ${response.statusCode}`);
               return;
             }
