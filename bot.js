@@ -67,7 +67,7 @@ client.on('message', msg => {
     }
 
     // Are we ignoring this channel
-    if(Config.ignoredchannels.includes(msg.channel.id) && msg.content.split(' ')[0] !== '!ignorechannel') {
+    if(Config.ignoredchannels.includes(msg.channel.id) && msg.content.split(' ')[0] !== '!ignorechannel' && prefix.indexOf(msg.content[0]) !== -1) {
         Log.console(`Ignore command "${msg.content}" due to ignore channel ${msg.channel.id}`, 'Commands');
         return false;
     }
