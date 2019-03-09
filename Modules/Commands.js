@@ -61,7 +61,7 @@ module.exports = {
         var rateLimit = this.getRateLimit(cmdIndex);
 
         if(diff > rateLimit) {
-            Log.console(`${this.commands[cmdIndex]} is not late limited for ${author.tag} since rateLimit has elapsed`, "Commands");
+            Log.console(`${this.commands[cmdIndex]} is not rate limited for ${author.tag} since rateLimit has elapsed`, "Commands");
             return false;
         }
 
