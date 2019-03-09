@@ -1,4 +1,5 @@
 const Config = require('../Modules/Config.js');
+const Commands = require('../Modules/Commands.js');
 
 
 module.exports = {
@@ -6,7 +7,7 @@ module.exports = {
     /**
      * What is run when someone enters this in chat
      */
-    run: function (msg)
+    run: function (msg, client)
     {
         var msgArray = msg.content.split(" ");
 
@@ -16,8 +17,8 @@ module.exports = {
         }
 
         if(msgArray[1] === 'list') {
-            var channels = JSON.stringify(Config.ignoredchannels);
-            msg.reply(`Ignored Channel ids are ${channels}`);
+            var channels = Object.values(Config.ignoredchannels);
+            msg.reply(`Ignored Channel ids are ${JSON.stringify(channels)}`);
             return false;
         }
 
@@ -27,21 +28,35 @@ module.exports = {
         }
 
         var channelid = msgArray[2] || msg.channel.id;
-        var channelIsIgnored = Config.ignoredchannels.includes(channelid);
+        var channelIsIgnored = Config.ignoredchannels.hasOwnProperty(channelid);
 
         if(addToIgnoreList) {
             if(channelIsIgnored) {
-                msg.reply(`Channel ${channelid} already being ignored`);
+                var channelName = Config.ignoredchannels[channelid];
+                msg.reply(`Channel ${channelName} already being ignored`);
+                return false;
             }
 
-            Config.ignoredchannels.push(channelid);
-            msg.reply(`Added channel ${channelid} to ignore list`);
+            var name = Commands.getChannelNameAndServerNameFromId(channelid, client);
+
+            if(name === false) {
+                msg.reply(`I don't think im in the server`);
+                return false;
+            }
+
+            Config.ignoredchannels[channelid] = name;
+            msg.reply(`Added channel ${name} to ignore list`);
             return false;
         }
 
-        var channelIndex = Config.ignoredchannels.indexOf(channelid);
-        Config.ignoredchannels.splice(channelIndex, 1);
-        msg.reply(`Removed channel ${channelid} from ignore list`);
+        if (Config.ignoredchannels.hasOwnProperty(channelid)) {
+            var name = Config.ignoredchannels[channelid];
+            delete Config.ignoredchannels[channelid];
+            msg.reply(`Removed channel ${name} from ignore list`);
+            return false;
+        }
+        msg.reply(`That channel is not being ignored ${channelid}`);
+
     },
 
     /**

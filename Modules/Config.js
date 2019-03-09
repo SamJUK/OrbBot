@@ -26,8 +26,8 @@ module.exports = {
     "Admins": [],
     "Moderators" : [],
 
-    "ignoredchannels": [
-        '551472905331146772' // BRIAN BOT TESTING CHANNEL
-    ]
+    "ignoredchannels": {
+        "551472905331146772": "Panduh_bottesting"
+    }
 
 };

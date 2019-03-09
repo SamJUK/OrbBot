@@ -89,5 +89,21 @@ module.exports = {
     doesCommandExist: function (cmd)
     {
 
+    },
+
+    getChannelNameAndServerNameFromId: function(channelId, client)
+    {
+        var ids = [];
+        var channels = client.channels.array()
+            .map(c => {
+                ids.push(c.id);
+                return `${c.guild.name}_${c.name}`;
+            });
+
+        if(ids.includes(channelId)) {
+            return channels[ids.indexOf(channelId)];
+        }
+
+        return false;
     }
 };
