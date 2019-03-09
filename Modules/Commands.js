@@ -39,7 +39,7 @@ module.exports = {
     getRateLimit: function(cmdIndex)
     {
         var rateLimit = this.commandsModule[cmdIndex].rateLimit || 1000;
-        Log.console(`Rate limit for ${this.commands[cmdIndex]   } is ${rateLimit}ms`, "Commands");
+        Log.console(`Rate limit for ${this.commands[cmdIndex]} is ${rateLimit}ms`, "Commands");
         return rateLimit;
     },
 
@@ -51,7 +51,7 @@ module.exports = {
         }
 
         if(!this.commandsRateLimit[cmdIndex].hasOwnProperty(author.id)) {
-            Log.console(`${this.commands[cmdIndex]} is not rate limited for ${author}`, "Commands");
+            Log.console(`${this.commands[cmdIndex]} is not rate limited for ${author.tag}`, "Commands");
             return false;
         }
 
@@ -61,7 +61,7 @@ module.exports = {
         var rateLimit = this.getRateLimit(cmdIndex);
 
         if(diff > rateLimit) {
-            Log.console(`${this.commands[cmdIndex]} is not late limited for ${author} since rateLimit has elapsed`, "Commands");
+            Log.console(`${this.commands[cmdIndex]} is not late limited for ${author.tag} since rateLimit has elapsed`, "Commands");
             return false;
         }
 
@@ -75,7 +75,7 @@ module.exports = {
         }
 
         this.commandsRateLimit[cmdIndex][author.id] = (new Date()).getTime();
-        Log.console(`Updated rate limit for ${author} using ${this.commands[cmdIndex]} command`, "Commands");
+        Log.console(`Updated rate limit for ${author.tag} using ${this.commands[cmdIndex]} command`, "Commands");
     },
 
     getRateLimitResponse: function (rate)
