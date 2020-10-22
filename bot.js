@@ -55,12 +55,6 @@ client.on('message', msg => {
     if (msg.author == client.user)
         return;
 
-    // KEVIN SEND GNUDES
-    // if(msg.author.id === '132279167998885888') {
-    //     msg.reply('<@132279167998885888> https://i.redd.it/1x5sls95ds321.jpg');
-    //     return false;
-    // }
-
     // Chat logging
     if (Config.chatLogging)
     {
@@ -70,6 +64,12 @@ client.on('message', msg => {
             guildName = guild.name;
 
         Log.file(`#${msg.channel.name} | ${msg.content}`, `../guilds/${guildName}/logs/chat`);
+    }
+
+    // Are we ignoring this channel
+    if(Config.ignoredchannels.hasOwnProperty(msg.channel.id) && msg.content.split(' ')[0] !== '!ignorechannel' && prefix.indexOf(msg.content[0]) !== -1) {
+        Log.console(`Ignore command "${msg.content}" due to ignore channel ${msg.channel.id}`, 'Commands');
+        return false;
     }
 
     // Check if the message is a command
